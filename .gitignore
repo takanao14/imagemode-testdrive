@@ -1,0 +1,4 @@
+podman-conf/
+registry-data/
+output/
+imagemode-conf/config.json

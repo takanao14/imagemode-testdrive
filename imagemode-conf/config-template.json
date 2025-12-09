@@ -1,0 +1,16 @@
+{
+ "blueprint": {
+   "customizations": {
+     "user": [
+       {
+         "name": "cloud-user",
+         "password": "changeme",
+         "key": "ssh-ed25519 AAA...",
+         "groups": [
+           "wheel"
+         ]
+       }
+     ]
+   }
+ }
+}
