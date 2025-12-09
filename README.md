@@ -2,12 +2,14 @@
 
 Image Modeをmacos上で試すためのサンプル
 
-ImageModeでは、コンテナレジストリからコンテナイメージをプルするとことが面白いところだと思うので、試すためには、
+ImageModeでは、ブートしたのちに、bootcコマンドでコンテナレジストリからブートOSを含んだイメージをプルして起動できるところが面白いと思うので、試すためには、
 - コンテナレジストリ
 - podman
 が必要となる。
 
-また、Bootable Imageを試したいので、VirtualBoxもインストールしておく
+また、Bootable Imageを試したいので、
+- VirtualBox
+もインストールしておく
 
 このドキュメントでは、コンテナレジストリはcontainer(apple)を使い、ローカル環境で試す構成としている
 
@@ -35,13 +37,16 @@ brew istall -cask virtualbox
 ```
 
 ## レジストリ起動
-ここでは、distribution(https://distribution.github.io/distribution/)を使ってコンテナレジストリを作る
+ここでは、distribution( https://distribution.github.io/distribution/ )を使ってコンテナレジストリを作る
 ```bash
 bash start-registry.sh
 ```
 
-## コンテナビルド (fedora40)
+## コンテナビルド
+イメージモードでブートしたイメージの切り替えをしたいので、ImageModeのコンテナを2個作る
+
 ```bash
+# ローカルのdisributionをコンテナレジストリとする
 REGISTRY_IPADDR=$(container inspect registry | jq -jr '.[].networks[].address | split("/")[0]')
 FEDORA40=$REGISTRY_IPADDR:5000/imagemode:40
 FEDORA42=$REGISTRY_IPADDR:5000/imagemode:42
