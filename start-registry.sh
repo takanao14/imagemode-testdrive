@@ -25,7 +25,7 @@ fi
 # If podman-conf directory does not exist, create it
 if [ ! -d "podman-conf" ]; then
   echo "Creating podman-conf directory..."
-  mkdir -p podman-conf
+  mkdir -p container/podman-conf
 fi
 
 # Get the IP address of the registry container
@@ -33,14 +33,14 @@ REGISTRY_IPADDR=$(container inspect registry | jq -jr '.[].networks[].address | 
 echo "Local registry IP address: ${REGISTRY_IPADDR}:5000"
 
 # Create local.conf for podman to use the local registry
-cat <<EOF > podman-conf/local.conf
+cat <<EOF > container/podman-conf/local.conf
 [[registry]]
 location="${REGISTRY_IPADDR}:5000"
 insecure=true
 EOF
 
 # Copy local.conf to podman machine and restart podman machine
-podman machine cp podman-conf/local.conf podman-machine-default:/etc/containers/registries.conf.d/local.conf
+podman machine cp container/podman-conf/local.conf podman-machine-default:/etc/containers/registries.conf.d/local.conf
 
 echo "Restarting podman machine"
 podman machine stop >/dev/null && echo "Podman machine stopped"
